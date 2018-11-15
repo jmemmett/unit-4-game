@@ -23,7 +23,7 @@
         $("#randomNumber").text(randomNumber);
     }
 
-    // dynamically generate crystal images and insert them on the screen
+    // dynamically generate crystal images, assign random values and display them on the screen
     crystalImages.forEach(function(imageUrl, index) {
         var crystal = $("<img>"); // create a new 'img' element
         crystal.attr("src", imageUrl);  // set the src equal to the image URL from the crystalImages array
@@ -33,9 +33,28 @@
         $("#images").append(crystal); // place the image on the page
     });
 
-    // Generate random values between 1 and 12 for each of 4 crystals
-    function generateCrystalValue () {
-        // TBD
+    // Checking the score
+    function scoreChecker() {
+        if ( totalValue === randomNumber ) {
+            $("#win-loss").text("You win!");
+            wins++;
+            $("#wins").text("Wins : " + wins);
+            reset();
+        } else if ( totalValue < randomNumber ) {
+            return;
+        } else {
+            $("#win-loss").text("You lose!");
+            losses++;
+            $("#losses").text("Losses : " + losses);
+            reset();
+        }
+    }
+
+    // reset the page and play again
+    function reset () {
+        totalValue = 0;
+        $("#totalScore").text(totalValue);
+        generateRandomNumber(19, 120);
     }
 
     // Crystal 1 click event
@@ -43,6 +62,7 @@
         crystalValue1 = parseInt($(this).attr("data-points"));
         totalValue = totalValue + crystalValue1; // add the point value of this crystal to totalValue
         $("#totalScore").text(totalValue); // display the updated totalValue to the HTML page
+        scoreChecker();
     });
 
     // Crystal 2 click event
@@ -50,6 +70,7 @@
         crystalValue2 = parseInt($(this).attr("data-points"));
         totalValue = totalValue + crystalValue2; // add the point value of this crystal to totalValue
         $("#totalScore").text(totalValue); // display the updated totalValue to the HTML page
+        scoreChecker();
     });
 
     // Crystal 3 click event
@@ -57,6 +78,7 @@
         crystalValue3 = parseInt($(this).attr("data-points"));
         totalValue = totalValue + crystalValue3; // add the point value of this crystal to totalValue
         $("#totalScore").text(totalValue); // display the updated totalValue to the HTML page
+        scoreChecker();
     });
 
     // Crystal 4 click event
@@ -64,7 +86,10 @@
         crystalValue4 = parseInt($(this).attr("data-points"));
         totalValue = totalValue + crystalValue4; // add the point value of this crystal to totalValue
         $("#totalScore").text(totalValue); // display the updated totalValue to the HTML page
+        scoreChecker();
     });
+
+    
 
 
 //----------------------
